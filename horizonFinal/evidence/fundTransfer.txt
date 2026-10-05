@@ -1,0 +1,8 @@
+bankdb=# SELECT *
+FROM fund_transfer
+ORDER BY created_at DESC
+LIMIT 1;
+             transfer_id              |   reference_no    |  idempotency_key  | from_account_id | to_account_id | amount  | remarks |  status   | failure_reason |            created_at
+--------------------------------------+-------------------+-------------------+-----------------+---------------+---------+---------+-----------+----------------+----------------------------------
+ f46fd6d3-53da-4941-9549-671190f758ef | TRF20261004000018 | transfer-test-001 |               1 |             2 | 1000.00 |         | COMPLETED |                | 2026-10-04 19:56:30.255175+05:30
+(1 row)

@@ -1,0 +1,16 @@
+bankdb=# SELECT
+    txn_id,
+    account_id,
+    txn_type,
+    amount,
+    description,
+    txn_time
+FROM account_transaction
+ORDER BY txn_id DESC
+LIMIT 2;
+ txn_id | account_id | txn_type | amount  |           description           |             txn_time
+--------+------------+----------+---------+---------------------------------+----------------------------------
+     43 |          2 | CREDIT   | 1000.00 | Fund transfer from 501000000001 | 2026-10-04 19:56:30.278754+05:30
+     42 |          1 | DEBIT    | 1000.00 | Fund transfer to 501000000002   | 2026-10-04 19:56:30.278754+05:30
+(2 rows)
+

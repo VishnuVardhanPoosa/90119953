@@ -1,0 +1,9 @@
+bankdb=# SELECT *
+bankdb-# FROM notification_log
+bankdb-# ORDER BY created_at DESC
+bankdb-# LIMIT 10;
+               event_id               | account_number |     event_type     | channel |                                                message                                                |            created_at
+--------------------------------------+----------------+--------------------+---------+-------------------------------------------------------------------------------------------------------+----------------------------------
+ c9e6b38d-fc66-35e7-a0fa-c2e1ead8d1d1 | 501000000002   | TRANSFER_COMPLETED | SMS     | You received 500 INR from account 501000000001. Reference: TRF20261004000022                          | 2026-10-04 22:07:02.482211+05:30
+ c9e6b38d-fc66-35e7-a0fa-c2e1ead8d1d1 | 501000000001   | TRANSFER_COMPLETED | SMS     | Transfer of 500 INR completed from account 501000000001 to 501000000002. Reference: TRF20261004000022 | 2026-10-04 22:07:02.468231+05:30
+(2 rows)

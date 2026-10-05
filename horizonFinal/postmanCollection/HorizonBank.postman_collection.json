@@ -1,0 +1,770 @@
+{
+  "info": {
+    "_postman_id": "7b0aa002-aff7-466e-9579-e24404041592",
+    "name": "HorizonBank",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57084596",
+    "_collection_link": "https://go.postman.co/collection/57084596-7b0aa002-aff7-466e-9579-e24404041592?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "TC-01-health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/actuator/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "actuator",
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Account Management",
+      "item": [
+        {
+          "name": "TC-02-getAccount",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000003",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000003"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-03-openAccount",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\": \"TestUser\",\r\n    \"email\": \"testuser007@example.com\",\r\n    \"phone\": \"9432156780\",\r\n    \"dateOfBirth\": \"1995-05-15\",\r\n    \"pan\": \"TREWQ1234F\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialDeposit\": 5000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-04-getNewAccount",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000011",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000011"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Account Cache",
+      "item": [
+        {
+          "name": "TC-05-accountCacheMiss",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000004",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000004"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-06-accountCacheHit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000004",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000004"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Fund Transfer",
+      "item": [
+        {
+          "name": "TC-07-createFundTransfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "transfer-test-001"
+              },
+              {
+                "key": "X-Correlation-Id",
+                "value": "test-001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 1000,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-08A-verifySenderBalances",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-08B-verifyReceiverBalance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000002",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000002"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-09-redisInvalidation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/501000000001",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "501000000001"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-10-kafkaTransferEventTrigger",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "idKey04"
+              },
+              {
+                "key": "X-Correlation-Id",
+                "value": "correlId04"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Idempotency",
+      "item": [
+        {
+          "name": "TC-12-idempotencyReplay",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "transfer-test-001"
+              },
+              {
+                "key": "X-Correlation-Id",
+                "value": "test-001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 1000,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-13-idempotencyMissing",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 1000,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-14-invalidIdempotency",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "aasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjklasdfghjkldndnjdfsjfhdsjghbdkjfvhbfjvkebfvkjfbfkjdsvbdskjvbskjfbes"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 1000,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Error Handling",
+      "item": [
+        {
+          "name": "TC-16-invalidSenderAccount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "invalid-test-01"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"999999999999\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-17-invalidDestinationAccount Copy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "invalid-test-02"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"999999999999\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-18-insufficientBalance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "invalid-test-03"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 99999,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-19-frozenAccountTransfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "invalid-test-004"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000005\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-20-invalidAmount",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "invalid-test-05"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": -500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-28-invalidAccountOpening",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fullName\": \"TestUser\",\r\n    \"email\": \"testuser007@example.com\",\r\n    \"phone\": \"9432156780\",\r\n    \"dateOfBirth\": \"1995-05-15\",\r\n    \"pan\": \"TREWQ1234F\",\r\n    \"accountType\": \"SAVINGS\",\r\n    \"initialDeposit\": 5000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Transfer and Transaction Queries",
+      "item": [
+        {
+          "name": "TC-21-transferEnquiry",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/TRF20261004000018",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "TRF20261004000018"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "System Integration Evidence",
+      "item": [
+        {
+          "name": "TC-23-transferFailedEventVerify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "failed-event-test-01"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"999999999999\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-24A-duplicateKey",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "duplicate-001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-24B-differentPayload",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "duplicate-001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000002\",\r\n    \"toAccount\": \"501000000001\",\r\n    \"amount\": 500,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-25-referenceNotFound",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/TRF20261004011118",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "TRF20261004011118"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-26-redisDownDuringTransfer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "redisDown-001"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fromAccount\": \"501000000001\",\r\n    \"toAccount\": \"501000000002\",\r\n    \"amount\": 100,\r\n    \"currency\": \"INR\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-27-kafkaDownDuringTransfer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": ""
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "tester",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Idempotency-Key",
+            "value": "idKey05"
+          },
+          {
+            "key": "X-Correlation-Id",
+            "value": "correlId05"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"fromAccount\": \"501000000002\",\r\n    \"toAccount\": \"501000000001\",\r\n    \"amount\": 1000,\r\n    \"currency\": \"INR\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/transfers",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "transfers"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

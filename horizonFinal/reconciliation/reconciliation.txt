@@ -1,0 +1,17 @@
+PS D:\DBproject\icicibank_data_sql_reds_kafka\Capstone_Bank_Account_System\starter_kit> docker exec -it bank-postgres psql -U bank_admin -d bankdb -f /sql/04_reconciliation.sql
+ account_number | balance | ledger_sum | last_balance_after
+----------------+---------+------------+--------------------
+(0 rows)
+
+ reference_no
+--------------
+(0 rows)
+
+ total_balances | total_deposits
+----------------+----------------
+(0 rows)
+
+ accounts | transfers | ledger_rows | money_in_bank
+----------+-----------+-------------+---------------
+        5 |         4 |          13 |     190000.00
+(1 row)
